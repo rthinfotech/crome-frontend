@@ -20,6 +20,9 @@ export default function BrowserView({ active, onTitleChange, onNewTab, initialUr
 const [currentUrl, setCurrentUrl] = useState(
   initialUrl || GOOGLE_URL
 );
+
+const [isLoading, setIsLoading] = useState(false);
+
   const webviewRef = useRef(null);
 
 
@@ -168,6 +171,21 @@ useEffect(() => {
   const webview = webviewRef.current;
   if (!webview) return;
 
+  const handleStartLoading = () => {
+  console.log("🌐 Page loading...");
+  setIsLoading(true);
+};
+
+const handleStopLoading = () => {
+  console.log("🌐 Page loaded");
+  setIsLoading(false);
+};
+
+const handleFailLoad = () => {
+  console.log("❌ Page failed to load");
+  setIsLoading(false);
+};
+
 const handleTargetBlank = (event) => {
   if (event.channel !== "target-blank") return;
 
@@ -280,6 +298,20 @@ const handleTargetBlank = (event) => {
     setUrl(event.url);
   };
 webview.addEventListener("ipc-message", handleTargetBlank);
+webview.addEventListener(
+  "did-start-loading",
+  handleStartLoading
+);
+
+webview.addEventListener(
+  "did-stop-loading",
+  handleStopLoading
+);
+
+webview.addEventListener(
+  "did-fail-load",
+  handleFailLoad
+);
   webview.addEventListener("dom-ready", handleDomReady);
   webview.addEventListener("did-navigate", handleNavigate);
   webview.addEventListener("did-navigate-in-page", handleNavigateInPage);
@@ -289,6 +321,21 @@ webview.addEventListener("ipc-message", handleTargetBlank);
   "ipc-message",
   handleTargetBlank
 );
+  webview.removeEventListener(
+    "did-start-loading",
+    handleStartLoading
+  );
+
+  webview.removeEventListener(
+    "did-stop-loading",
+    handleStopLoading
+  );
+
+  webview.removeEventListener(
+    "did-fail-load",
+    handleFailLoad
+  );
+
     webview.removeEventListener("dom-ready", handleDomReady);
     webview.removeEventListener("did-navigate", handleNavigate);
     webview.removeEventListener(
@@ -396,7 +443,7 @@ const goHome = () => {
    
 
       {/* Page */}
-      <div style={{ flex: 1 }}>
+      {/* <div style={{ flex: 1 }}>
         {currentUrl ? (
           <webview
             ref={webviewRef}
@@ -404,6 +451,7 @@ const goHome = () => {
               preload={`file://${window.__dirname}/electron/webviewPreload.cjs`}
             style={{ width: "100%", height: "100%", border: "none" }}
           />
+          
         ) : (
           <div
             style={{
@@ -418,7 +466,45 @@ const goHome = () => {
             Mini Browser
           </div>
         )}
-      </div>
+      </div> */}
+
+      <div style={{ flex: 1, position: "relative" }}>
+  {currentUrl ? (
+    <>
+      <webview
+        ref={webviewRef}
+        src={currentUrl}
+        preload={`file://${window.__dirname}/electron/webviewPreload.cjs`}
+        style={{
+          width: "100%",
+          height: "100%",
+          border: "none",
+        }}
+      />
+
+      {isLoading && (
+       <div
+  className="absolute top-0 left-0 right-0 h-0.5 overflow-hidden z-10"
+>
+  <div className="h-full w-1/3 bg-[#1a73e8] animate-[pulse_1s_ease-in-out_infinite]" />
+</div>
+      )}
+    </>
+  ) : (
+    <div
+      style={{
+        height: "100%",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        fontSize: "28px",
+        color: "#666",
+      }}
+    >
+      Mini Browser
+    </div>
+  )}
+</div>
     </div>
   );
 }

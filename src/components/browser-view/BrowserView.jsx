@@ -375,6 +375,9 @@ const goHome = () => {
       placeholder="Search Google or type a URL"
       value={url}
       onChange={(e) => setUrl(e.target.value)}
+       onFocus={(e) => {
+    e.target.select();
+  }}
       onKeyDown={(e) => {
         if (e.key === "Enter") handleSearch();
       }}

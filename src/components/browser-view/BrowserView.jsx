@@ -10,11 +10,16 @@ import {
 import { getInjectionRule } from "../../injections/injectionEngine";
 
 
-export default function BrowserView({ active, onTitleChange }) {
+export default function BrowserView({ active, onTitleChange, onNewTab, initialUrl }) {
   const GOOGLE_URL = "https://www.google.com";
 
-      const [url, setUrl] = useState("");
-  const [currentUrl, setCurrentUrl] = useState(GOOGLE_URL);
+    const [url, setUrl] = useState(
+  initialUrl || GOOGLE_URL
+);
+
+const [currentUrl, setCurrentUrl] = useState(
+  initialUrl || GOOGLE_URL
+);
   const webviewRef = useRef(null);
 
 
@@ -163,6 +168,16 @@ useEffect(() => {
   const webview = webviewRef.current;
   if (!webview) return;
 
+const handleTargetBlank = (event) => {
+  if (event.channel !== "target-blank") return;
+
+  const url = event.args[0];
+
+  console.log("TARGET BLANK URL:", url);
+
+  onNewTab(url);
+};
+
   const handleDomReady = async () => {
     try {
       const data = await webview.executeJavaScript(`
@@ -184,6 +199,66 @@ useEffect(() => {
 
       // Update address bar
       setUrl(webview.getURL());
+
+
+    // ⭐ TEST: detect target="_blank"
+    await webview.executeJavaScript(`
+      (() => {
+        if (window.__cromeClickTracker) return;
+
+        window.__cromeClickTracker = true;
+
+        document.addEventListener("click", (event) => {
+          const element =
+            event.target.closest("a, button");
+
+          if (!element) return;
+
+          const target =
+            element.getAttribute("target");
+
+          const href = element.href;
+
+          console.log("🔥 CLICKED ELEMENT");
+          console.log(
+            "TAG:",
+            element.tagName
+          );
+          console.log(
+            "TEXT:",
+            element.innerText
+          );
+          console.log(
+            "TARGET:",
+            target
+          );
+          console.log(
+            "HREF:",
+            href
+          );
+
+          if (
+            element.tagName === "A" &&
+            target === "_blank" &&
+            href
+          ) {
+            event.preventDefault();
+
+            console.log(
+              "🔥🔥 TARGET BLANK FOUND:",
+              href
+            );
+         window.dispatchEvent(
+    new CustomEvent("crome-target-blank", {
+      detail: href,
+    })
+  );
+          }
+        }, true);
+      })();
+    `);
+
+   
         injectCustomResult();
 
 //       setTimeout(() => {
@@ -204,12 +279,16 @@ useEffect(() => {
   const handleNavigateInPage = (event) => {
     setUrl(event.url);
   };
-
+webview.addEventListener("ipc-message", handleTargetBlank);
   webview.addEventListener("dom-ready", handleDomReady);
   webview.addEventListener("did-navigate", handleNavigate);
   webview.addEventListener("did-navigate-in-page", handleNavigateInPage);
 
   return () => {
+    webview.removeEventListener(
+  "ipc-message",
+  handleTargetBlank
+);
     webview.removeEventListener("dom-ready", handleDomReady);
     webview.removeEventListener("did-navigate", handleNavigate);
     webview.removeEventListener(
@@ -319,6 +398,7 @@ const goHome = () => {
           <webview
             ref={webviewRef}
             src={currentUrl}
+              preload={`file://${window.__dirname}/electron/webviewPreload.cjs`}
             style={{ width: "100%", height: "100%", border: "none" }}
           />
         ) : (

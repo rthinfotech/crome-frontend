@@ -45,7 +45,43 @@ console.log("ICON PATH:", iconPath);
     },
   });
 
-  
+
+  win.webContents.on(
+  "will-attach-webview",
+  (event, webPreferences, params) => {
+    webPreferences.preload = path.join(
+      __dirname,
+      "electron",
+      "webviewPreload.cjs"
+    );
+
+    console.log(
+      "🔥 WEBVIEW PRELOAD:",
+      webPreferences.preload
+    );
+  }
+);
+
+win.webContents.on("did-attach-webview", (event, webContents) => {
+  console.log("🔥 DID ATTACH WEBVIEW");
+  console.log("WEBVIEW ID:", webContents.id);
+
+  // Capture console.log() from the website inside the webview
+ webContents.on(
+  "console-message",
+  (event, level, message) => {
+    console.log("🌐 WEBVIEW:", message);
+  }
+);
+
+  webContents.setWindowOpenHandler(({ url }) => {
+    console.log("🔥🔥 TARGET BLANK URL:", url);
+
+    return {
+      action: "deny",
+    };
+  });
+});
 
   // Remove menu from this window
   win.removeMenu();

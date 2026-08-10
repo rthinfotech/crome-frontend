@@ -4,17 +4,39 @@ import ChromeTabBar from "./components/crome-tabs/CromeTabBar";
 import BrowserView from "./components/browser-view/BrowserView";
 
 function App() {
-  // const [tabs, setTabs] = useState([{ id: 1, title: "New Tab" }]);
-  const [tabs, setTabs] = useState([
+//   const [tabs, setTabs] = useState([
+//   {
+//     id: 1,
+//     title: "New Tab",
+//     favicon: "",
+//   },
+// ]);
+const [tabs, setTabs] = useState([
   {
     id: 1,
     title: "New Tab",
     favicon: "",
+    url: "https://www.google.com",
   },
 ]);
   const [activeTab, setActiveTab] = useState(1);
 
-const addTab = () => {
+// const addTab = () => {
+//   const id = Date.now();
+
+//   setTabs((prev) => [
+//     ...prev,
+//     {
+//       id,
+//       title: "New Tab",
+//       favicon: "",
+//     },
+//   ]);
+
+//   setActiveTab(id);
+// };
+
+const addTab = (url = "https://www.google.com") => {
   const id = Date.now();
 
   setTabs((prev) => [
@@ -23,6 +45,7 @@ const addTab = () => {
       id,
       title: "New Tab",
       favicon: "",
+      url,
     },
   ]);
 
@@ -79,6 +102,8 @@ const updateTabInfo = useCallback((id, data) => {
   key={tab.id}
   active={tab.id === activeTab}
   onTitleChange={(data) => updateTabInfo(tab.id, data)}
+  onNewTab={addTab}
+  initialUrl={tab.url}
 />
         ))}
       </div>

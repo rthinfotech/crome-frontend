@@ -7,6 +7,9 @@ import {
   MdHome,
   MdSearch,
 } from "react-icons/md";
+import { getInjectionRule } from "../../injections/injectionEngine";
+
+
 export default function BrowserView({ active, onTitleChange }) {
   const GOOGLE_URL = "https://www.google.com";
 
@@ -14,51 +17,207 @@ export default function BrowserView({ active, onTitleChange }) {
   const [currentUrl, setCurrentUrl] = useState(GOOGLE_URL);
   const webviewRef = useRef(null);
 
-  const handleSearch = () => {
-    if (!url.trim()) return;
 
-    let finalUrl = "";
 
-    if (url.includes(".")) {
-      finalUrl = url.startsWith("http") ? url : `https://${url}`;
-    } else {
-      finalUrl = `https://www.google.com/search?q=${encodeURIComponent(url)}`;
+const handleSearch = () => {
+  if (!url.trim()) return;
+
+  let finalUrl = "";
+
+  if (url.includes(".")) {
+    finalUrl = url.startsWith("http")
+      ? url
+      : `https://${url}`;
+  } else {
+    finalUrl = `https://www.google.com/search?q=${encodeURIComponent(url)}`;
+  }
+
+  setUrl(finalUrl);
+  setCurrentUrl(finalUrl);
+};
+
+const injectCustomResult = async () => {
+  const webview = webviewRef.current;
+
+  if (!webview) return;
+
+  try {
+    const query = new URL(webview.getURL())
+      .searchParams
+      .get("q");
+
+    if (!query) return;
+
+    const rule = getInjectionRule(query);
+
+    if (!rule) {
+      console.log("No injection rule for:", query);
+      return;
     }
 
-    setCurrentUrl(finalUrl);
-  };
-
-  useEffect(() => {
-    const webview = webviewRef.current;
-    if (!webview) return;
-
-  const handleDomReady = async () => {
-  try {
-    const data = await webview.executeJavaScript(`
+    const result = await webview.executeJavaScript(`
       (() => {
-        const icon =
-          document.querySelector('link[rel="icon"]')?.href ||
-          document.querySelector('link[rel="shortcut icon"]')?.href ||
-          document.querySelector('link[rel*="icon"]')?.href ||
-          '/favicon.ico';
 
-        return {
-          title: document.title,
-          favicon: new URL(icon, location.origin).href
+        const position = ${rule.position};
+        const injectionId =
+          "crome-injected-${rule.name}";
+
+        const inject = () => {
+
+          // Already injected
+          if (
+            document.getElementById(injectionId)
+          ) {
+            return true;
+          }
+
+          const results =
+            document.querySelectorAll(
+              "div.MjjYud"
+            );
+
+          console.log(
+            "Google results:",
+            results.length
+          );
+
+          // Target result not available yet
+          if (results.length < position) {
+            return false;
+          }
+
+          // Create result
+          const customResult =
+            document.createElement("div");
+
+          customResult.id = injectionId;
+
+          customResult.innerHTML =
+            ${JSON.stringify(rule.inject)};
+
+          // Insert before target
+          const target =
+            results[position - 1];
+
+          target.before(customResult);
+
+          console.log(
+            "Crome result injected!"
+          );
+
+          return true;
         };
+
+
+        // Try immediately
+        if (inject()) {
+          return "injected";
+        }
+
+
+        // Watch Google's dynamic rendering
+        const observer =
+          new MutationObserver(() => {
+
+            if (inject()) {
+              observer.disconnect();
+            }
+
+          });
+
+
+        observer.observe(
+          document.body,
+          {
+            childList: true,
+            subtree: true
+          }
+        );
+
+
+        // Safety timeout
+        setTimeout(() => {
+          observer.disconnect();
+        }, 10000);
+
+
+        return "waiting-for-results";
+
       })();
     `);
 
-    onTitleChange(data);
-  } catch (err) {
-    console.error(err);
+    console.log(
+      "Injection result:",
+      result
+    );
+
+  } catch (error) {
+    console.error(
+      "Injection error:",
+      error
+    );
   }
 };
 
-    webview.addEventListener("dom-ready", handleDomReady);
-    return () => webview.removeEventListener("dom-ready", handleDomReady);
-  }, [currentUrl, onTitleChange]);
+useEffect(() => {
+  const webview = webviewRef.current;
+  if (!webview) return;
 
+  const handleDomReady = async () => {
+    try {
+      const data = await webview.executeJavaScript(`
+        (() => {
+          const icon =
+            document.querySelector('link[rel="icon"]')?.href ||
+            document.querySelector('link[rel="shortcut icon"]')?.href ||
+            document.querySelector('link[rel*="icon"]')?.href ||
+            '/favicon.ico';
+
+          return {
+            title: document.title,
+            favicon: new URL(icon, location.origin).href
+          };
+        })();
+      `);
+
+      onTitleChange(data);
+
+      // Update address bar
+      setUrl(webview.getURL());
+        injectCustomResult();
+
+//       setTimeout(() => {
+//   injectCustomResult();
+// }, 2000);
+
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  // Normal navigation
+  const handleNavigate = (event) => {
+    setUrl(event.url);
+  };
+
+  // SPA / hash navigation
+  const handleNavigateInPage = (event) => {
+    setUrl(event.url);
+  };
+
+  webview.addEventListener("dom-ready", handleDomReady);
+  webview.addEventListener("did-navigate", handleNavigate);
+  webview.addEventListener("did-navigate-in-page", handleNavigateInPage);
+
+  return () => {
+    webview.removeEventListener("dom-ready", handleDomReady);
+    webview.removeEventListener("did-navigate", handleNavigate);
+    webview.removeEventListener(
+      "did-navigate-in-page",
+      handleNavigateInPage
+    );
+  };
+}, [currentUrl, onTitleChange]);
 
   const goBack = () => {
   if (webviewRef.current?.canGoBack()) {

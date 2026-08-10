@@ -1,0 +1,100 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+
+  width: 100%;
+  height: 100%;
+
+  overflow: hidden;
+
+  font-family:
+    "Segoe UI",
+    Arial,
+    sans-serif;
+
+  background: transparent;
+}
+
+.menu {
+  width: 260px;
+
+  padding: 6px 0;
+
+  background: #2b2b2b;
+
+  border: 1px solid #444;
+
+  border-radius: 8px;
+
+  box-shadow:
+    0 2px 6px rgba(0, 0, 0, 0.35),
+    0 6px 18px rgba(0, 0, 0, 0.3);
+
+  color: #e8eaed;
+}
+
+.item {
+  width: 100%;
+  height: 36px;
+
+  padding: 0 12px;
+
+  border: 0;
+
+  background: transparent;
+
+  color: #e8eaed;
+
+  display: grid;
+
+  grid-template-columns:
+    28px 1fr auto;
+
+  align-items: center;
+
+  text-align: left;
+
+  font-family: inherit;
+
+  font-size: 13px;
+
+  cursor: pointer;
+}
+
+.item:hover:not(:disabled) {
+  background: #3c4043;
+}
+
+.item:disabled {
+  color: #777;
+  cursor: default;
+}
+
+.icon {
+  width: 24px;
+
+  font-size: 16px;
+
+  color: #d7d9dc;
+}
+
+.shortcut {
+  margin-left: 20px;
+
+  color: #9aa0a6;
+
+  font-size: 12px;
+}
+
+.separator {
+  height: 1px;
+
+  margin: 6px 0;
+
+  background: #454545;
+}

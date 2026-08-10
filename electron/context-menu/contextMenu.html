@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+
+  <link
+    rel="stylesheet"
+    href="./contextMenu.css"
+  />
+</head>
+
+<body>
+
+  <div class="menu">
+
+    <button id="back" class="item">
+      <span class="icon">←</span>
+      <span>Back</span>
+      <span class="shortcut">
+        Alt+Left
+      </span>
+    </button>
+
+    <button id="forward" class="item">
+      <span class="icon">→</span>
+      <span>Forward</span>
+      <span class="shortcut">
+        Alt+Right
+      </span>
+    </button>
+
+    <button id="reload" class="item">
+      <span class="icon">↻</span>
+      <span>Reload</span>
+      <span class="shortcut">
+        Ctrl+R
+      </span>
+    </button>
+
+    <div class="separator"></div>
+
+    <button id="inspect" class="item">
+      <span class="icon">⌕</span>
+      <span>Inspect</span>
+    </button>
+
+  </div>
+
+  <script src="./contextMenuRenderer.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,163 @@
+/* crometab.css */
+.chrome-tabs {
+  height: 40px;
+  background: #16171a;
+  display: flex;
+  align-items: flex-end;
+  padding: 0 10px;
+  gap: 2px;
+  user-select: none;
+  overflow: hidden;
+}
+
+.chrome-tabs-list {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  flex: 1;
+  height: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+
+.chrome-tabs-list::-webkit-scrollbar {
+  display: none;
+}
+
+.chrome-tab {
+  position: relative;
+  width: 200px;
+  min-width: 120px;
+  max-width: 240px;
+  height: 32px;
+  margin-bottom: 4px;
+  border-radius: 8px 8px 0 0;
+  cursor: pointer;
+  background: transparent;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.chrome-tab:not(.active):hover {
+  background: #202124;
+}
+
+.chrome-tab.active {
+  background: #26282c;
+  height: 36px;
+  margin-bottom: 0;
+  z-index: 10;
+}
+
+/* signature seam — only on the active tab */
+.chrome-tab.active .chrome-seam {
+  position: absolute;
+  top: 0;
+  left: 10px;
+  right: 10px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #2dd4bf, #6c5ce7);
+}
+
+/* concave bottom curves — the "flare into the bar" shape */
+.chrome-tab.active::before,
+.chrome-tab.active::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 10px;
+  height: 10px;
+  z-index: 1;
+}
+
+.chrome-tab.active::before {
+  left: -10px;
+  background: radial-gradient(circle at 100% 0, transparent 10px, #26282c 10px);
+}
+
+.chrome-tab.active::after {
+  right: -10px;
+  background: radial-gradient(circle at 0 0, transparent 10px, #26282c 10px);
+}
+
+.chrome-tab-content {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  gap: 10px;
+  z-index: 2;
+}
+
+.chrome-favicon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: #9aa0a6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.chrome-tab.active .chrome-favicon {
+  color: #dfe1e5;
+}
+
+.chrome-title {
+  flex: 1;
+  color: #9aa0a6;
+  font-size: 13px;
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: color 0.15s ease, font-weight 0.15s ease;
+}
+
+.chrome-tab.active .chrome-title {
+  color: #f1f3f4;
+  font-weight: 500;
+}
+
+.chrome-close {
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  color: #9aa0a6;
+  opacity: 0;
+  flex-shrink: 0;
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.chrome-tab:hover .chrome-close {
+  opacity: 1;
+}
+
+.chrome-close:hover {
+  background: #3a3d41;
+  color: #f1f3f4;
+}
+
+.chrome-new {
+  width: 28px;
+  height: 28px;
+  margin-left: 6px;
+  margin-bottom: 4px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9aa0a6;
+  cursor: pointer;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.chrome-new:hover {
+  background: #26282c;
+  color: #f1f3f4;
+}

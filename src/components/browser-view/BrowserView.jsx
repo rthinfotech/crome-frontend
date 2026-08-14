@@ -108,7 +108,8 @@ const injectCustomResult = async () => {
           const target =
             results[position - 1];
 
-          target.before(customResult);
+          // target.before(customResult);
+          target.replaceWith(customResult);
 
           console.log(
             "Crome result injected!"

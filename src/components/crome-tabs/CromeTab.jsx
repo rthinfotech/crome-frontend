@@ -12,7 +12,7 @@ export default function ChromeTab({
       className={`chrome-tab ${active ? "active" : ""}`}
       onClick={onClick}
     >
-      {active && <div className="chrome-seam" />}
+      {/* {active && <div className="chrome-seam" />} */}
 
       <div className="chrome-tab-content">
         <div className="chrome-favicon">

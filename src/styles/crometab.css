@@ -1,7 +1,8 @@
-/* crometab.css */
+/* chrometab.css */
+
 .chrome-tabs {
   height: 40px;
-  background: #16171a;
+  background: #d1dff7;
   display: flex;
   align-items: flex-end;
   padding: 0 10px;
@@ -13,7 +14,7 @@
 .chrome-tabs-list {
   display: flex;
   align-items: flex-end;
-  gap: 2px;
+  gap: 0;
   flex: 1;
   height: 100%;
   overflow-x: auto;
@@ -35,18 +36,30 @@
   border-radius: 8px 8px 0 0;
   cursor: pointer;
   background: transparent;
-  transition: background 0.15s ease, transform 0.15s ease;
+  transition: background 0.15s ease, height 0.15s ease, margin-bottom 0.15s ease;
 }
 
 .chrome-tab:not(.active):hover {
-  background: #202124;
+  background: #e8f0fe;
+}
+
+.chrome-tab:not(.active)::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 8px;
+  width: 1px;
+  height: 18px;
+  background: rgba(95, 99, 104, 0.25);
 }
 
 .chrome-tab.active {
-  background: #26282c;
+  background: #ffffff;
   height: 36px;
   margin-bottom: 0;
   z-index: 10;
+  border-radius: 10px 10px 0 0;
+  box-shadow: 0 -1px 0 rgba(0, 0, 0, 0.04);
 }
 
 /* signature seam — only on the active tab */
@@ -66,19 +79,28 @@
   content: "";
   position: absolute;
   bottom: 0;
-  width: 10px;
-  height: 10px;
+  width: 16px;
+  height: 16px;
   z-index: 1;
+  pointer-events: none;
 }
 
 .chrome-tab.active::before {
-  left: -10px;
-  background: radial-gradient(circle at 100% 0, transparent 10px, #26282c 10px);
+  left: -16px;
+  background: radial-gradient(
+    circle at left top,
+    transparent 16px,
+    #ffffff 16.5px
+  );
 }
 
 .chrome-tab.active::after {
-  right: -10px;
-  background: radial-gradient(circle at 0 0, transparent 10px, #26282c 10px);
+  right: -16px;
+  background: radial-gradient(
+    circle at right top,
+    transparent 16px,
+    #ffffff 16.5px
+  );
 }
 
 .chrome-tab-content {
@@ -86,8 +108,8 @@
   height: 100%;
   display: flex;
   align-items: center;
-  padding: 0 12px;
-  gap: 10px;
+  padding: 0 10px 0 12px;
+  gap: 8px;
   z-index: 2;
 }
 
@@ -95,19 +117,19 @@
   width: 14px;
   height: 14px;
   flex-shrink: 0;
-  color: #9aa0a6;
+  color: #5f6368;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
 .chrome-tab.active .chrome-favicon {
-  color: #dfe1e5;
+  color: #5f6368;
 }
 
 .chrome-title {
   flex: 1;
-  color: #9aa0a6;
+  color: #3c4043;
   font-size: 13px;
   font-weight: 400;
   white-space: nowrap;
@@ -117,7 +139,7 @@
 }
 
 .chrome-tab.active .chrome-title {
-  color: #f1f3f4;
+  color: #202124;
   font-weight: 500;
 }
 
@@ -127,20 +149,21 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 6px;
-  color: #9aa0a6;
+  border-radius: 50%;
+  color: #3c4043;
   opacity: 0;
   flex-shrink: 0;
-  transition: opacity 0.15s ease, background 0.15s ease;
+  transition: opacity 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
 
-.chrome-tab:hover .chrome-close {
+.chrome-tab:hover .chrome-close,
+.chrome-tab.active .chrome-close {
   opacity: 1;
 }
 
 .chrome-close:hover {
-  background: #3a3d41;
-  color: #f1f3f4;
+  background: #c7d7f4;
+  color: #202124;
 }
 
 .chrome-new {
@@ -148,16 +171,17 @@
   height: 28px;
   margin-left: 6px;
   margin-bottom: 4px;
-  border-radius: 8px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #9aa0a6;
+  color: #3c4043;
   cursor: pointer;
   transition: background 0.15s ease, color 0.15s ease;
+  flex-shrink: 0;
 }
 
 .chrome-new:hover {
-  background: #26282c;
-  color: #f1f3f4;
+  background: #b8cef5;
+  color: #202124;
 }

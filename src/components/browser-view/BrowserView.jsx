@@ -8,6 +8,7 @@ import {
   MdSearch,
 } from "react-icons/md";
 import { getInjectionRule } from "../../injections/injectionEngine";
+import { FiX } from "react-icons/fi";
 
 
 export default function BrowserView({ active, onTitleChange, onNewTab, initialUrl }) {
@@ -378,39 +379,39 @@ const goHome = () => {
     >
       {/* Navbar */}
 
-      <div className="flex items-center gap-2 px-3 py-1.5 bg-[#202124] border-b border-[#3c4043]">
+      <div className="flex items-center gap-2 px-3 py-1.5 bg-[#d1dff7]">
 
   {/* Navigation Buttons */}
  <button
   onClick={goBack}
-  className="w-8 h-8 rounded-full hover:bg-[#3c4043] flex items-center justify-center text-gray-300"
+  className="w-8 h-8 rounded-full hover:bg-[#e9f0fb] flex items-center justify-center text-gray-600"
 >
   <MdArrowBack size={20} />
 </button>
 
 <button
   onClick={goForward}
-  className="w-8 h-8 rounded-full hover:bg-[#3c4043] flex items-center justify-center text-gray-300"
+  className="w-8 h-8 rounded-full hover:bg-[#e9f0fb] flex items-center justify-center text-gray-600"
 >
   <MdArrowForward size={20} />
 </button>
 
 <button
   onClick={refreshPage}
-  className="w-8 h-8 rounded-full hover:bg-[#3c4043] flex items-center justify-center text-gray-300"
+  className="w-8 h-8 rounded-full hover:bg-[#e9f0fb] flex items-center justify-center text-gray-600"
 >
   <MdRefresh size={20} />
 </button>
 
 <button
   onClick={goHome}
-  className="w-8 h-8 rounded-full hover:bg-[#3c4043] flex items-center justify-center text-gray-300"
+  className="w-8 h-8 rounded-full hover:bg-[#e9f0fb] flex items-center justify-center text-gray-600"
 >
   <MdHome size={20} />
 </button>
 
   {/* Address Bar */}
-  <div className="flex items-center flex-1 max-w-4xl h-9 rounded-full bg-[#303134] border border-[#5f6368] px-3">
+  <div className="flex items-center flex-1 max-w-4xl h-9 rounded-full bg-[#e9f0fb] border-3 border-[#b3caf2] px-3">
 
     <MdSearch
       size={18}
@@ -428,15 +429,15 @@ const goHome = () => {
       onKeyDown={(e) => {
         if (e.key === "Enter") handleSearch();
       }}
-      className="flex-1 bg-transparent outline-none text-[14px] text-white placeholder:text-gray-400"
+      className="flex-1 bg-transparent outline-none text-[14px] text-gray-600 placeholder:text-gray-400"
     />
 
-    <button
+    {/* <button
       onClick={handleSearch}
-      className="ml-2 px-4 py-1 rounded-full bg-[#1a73e8] hover:bg-[#4285f4] text-white text-sm font-medium transition"
+      className="ml-2 px-4 py-1 rounded-full  hover:bg-[#b3caf2] text-[#3c4043] text-sm font-medium transition"
     >
-      Go
-    </button>
+                <FiX size={13} />
+    </button> */}
   </div>
 </div>
     

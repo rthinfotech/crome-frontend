@@ -18,12 +18,12 @@ export default function ChromeTabBar({ tabs, activeTab, setActiveTab, addTab, cl
             onClose={() => closeTab(tab.id)}
           />
         ))}
-      </div>
       <div className="chrome-new"
       //  onClick={addTab}
         onClick={() => addTab()}
        >
         <FiPlus size={16} />
+      </div>
       </div>
     </div>
   );

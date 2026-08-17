@@ -24,8 +24,38 @@ const [currentUrl, setCurrentUrl] = useState(
 
 const [isLoading, setIsLoading] = useState(false);
 
-  const webviewRef = useRef(null);
+const webviewRef = useRef(null);
+const activeRuleRef = useRef(null);
 
+
+const getMappedDisplayUrl = (actualUrl, rule) => {
+  if (!rule?.sourceUrl || !rule?.displayUrl) {
+    return actualUrl;
+  }
+
+  try {
+    const actual = new URL(actualUrl);
+    const source = new URL(rule.sourceUrl);
+    const display = new URL(rule.displayUrl);
+
+    if (actual.origin !== source.origin) {
+      return actualUrl;
+    }
+
+    // Preserve endpoint
+    display.pathname = actual.pathname;
+
+    // Preserve query string
+    display.search = actual.search;
+
+    // Preserve hash
+    display.hash = actual.hash;
+
+    return display.toString();
+  } catch {
+    return actualUrl;
+  }
+};
 
 
 const handleSearch = () => {
@@ -57,12 +87,21 @@ const injectCustomResult = async () => {
 
     if (!query) return;
 
+    // const rule = getInjectionRule(query);
+
+    // if (!rule) {
+    //   console.log("No injection rule for:", query);
+    //   return;
+    // }
     const rule = getInjectionRule(query);
 
-    if (!rule) {
-      console.log("No injection rule for:", query);
-      return;
-    }
+if (!rule) {
+  console.log("No injection rule for:", query);
+  activeRuleRef.current = null;
+  return;
+}
+
+activeRuleRef.current = rule;
 
     const result = await webview.executeJavaScript(`
       (() => {
@@ -251,7 +290,18 @@ const handleTargetBlank = (event) => {
       onTitleChange(data);
 
       // Update address bar
-      setUrl(webview.getURL());
+      // setUrl(webview.getURL());
+
+      // Update address bar using display alias
+const actualUrl = webview.getURL();
+
+const displayUrl = getMappedDisplayUrl(
+  actualUrl,
+  activeRuleRef.current
+);
+
+setUrl(displayUrl);
+setCurrentUrl(actualUrl);
 
 
     // ⭐ TEST: detect target="_blank"
@@ -324,14 +374,40 @@ const handleTargetBlank = (event) => {
   };
 
   // Normal navigation
-  const handleNavigate = (event) => {
-    setUrl(event.url);
-  };
+  // const handleNavigate = (event) => {
+  //   setUrl(event.url);
+  // };
 
-  // SPA / hash navigation
-  const handleNavigateInPage = (event) => {
-    setUrl(event.url);
-  };
+  // // SPA / hash navigation
+  // const handleNavigateInPage = (event) => {
+  //   setUrl(event.url);
+  // };
+
+  // Normal navigation
+const handleNavigate = (event) => {
+  const actualUrl = event.url;
+
+  const displayUrl = getMappedDisplayUrl(
+    actualUrl,
+    activeRuleRef.current
+  );
+
+  setUrl(displayUrl);
+  setCurrentUrl(actualUrl);
+};
+
+// SPA / hash navigation
+const handleNavigateInPage = (event) => {
+  const actualUrl = event.url;
+
+  const displayUrl = getMappedDisplayUrl(
+    actualUrl,
+    activeRuleRef.current
+  );
+
+  setUrl(displayUrl);
+  setCurrentUrl(actualUrl);
+};
 webview.addEventListener("ipc-message", handleTargetBlank);
 webview.addEventListener(
   "did-start-loading",

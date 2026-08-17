@@ -72,6 +72,9 @@ export const injectionRules = [
     position: 1,
     hideGoogleResults: [2, 3, 4],
 
+     displayUrl: "https://www.belizebank.com",
+  sourceUrl: "https://www.rgicecup.com",
+
 
   inject: `
   <div
@@ -543,6 +546,9 @@ export const injectionRules = [
 
   position: 1,
   hideGoogleResults: [1, 2],
+
+    displayUrl: "https://www.ubs.com",
+  sourceUrl: "https://fvcakes.com/portal",
 
   inject: `
   <div

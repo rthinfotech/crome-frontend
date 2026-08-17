@@ -8,7 +8,7 @@ import {
   MdSearch,
 } from "react-icons/md";
 import { getInjectionRule } from "../../injections/injectionEngine";
-import { FiX } from "react-icons/fi";
+// import { FiX } from "react-icons/fi";
 
 
 export default function BrowserView({ active, onTitleChange, onNewTab, initialUrl }) {

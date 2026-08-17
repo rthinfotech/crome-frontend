@@ -9,5 +9,6 @@ export default defineConfig({
 
   build: {
     outDir: "renderer",
+        // assetsInlineLimit: 1024 * 1024, 
   },
 });

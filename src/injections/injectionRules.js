@@ -1,12 +1,73 @@
+// import belizeLogo from "../assets/belize-bank/belize-logo.png";
+import belizeLogo from "../assets/belize-bank/belize-logo.png?inline";
 export const injectionRules = [
   {
     name: "belize",
 
+    // keywords: [
+    //   "belize bank",
+    //   "belize",
+    //   "belizebank",
+    // ],
+
     keywords: [
-      "belize bank",
-      "belize",
-      "belizebank",
-    ],
+  // Main name
+  "belize",
+  "belize bank",
+  "belizebank",
+  "belize-bank",
+  "belize bank limited",
+  "the belize bank",
+  "belize bank ltd",
+  "belize bank limited",
+
+  // Common searches
+  "belize bank login",
+  "belize bank online",
+  "belize bank online banking",
+  "belize bank internet banking",
+  "belize bank banking",
+  "belize bank account",
+  "belize bank website",
+  "belize bank app",
+  "belize bank mobile banking",
+  "belize bank branch",
+  "belize bank branches",
+  "belize bank contact",
+  "belize bank phone number",
+  "belize bank customer service",
+
+  // Services
+  "belize bank loans",
+  "belize bank mortgage",
+  "belize bank credit card",
+  "belize bank debit card",
+  "belize bank savings",
+  "belize bank checking",
+  "belize bank transfer",
+  "belize bank wire transfer",
+  "belize bank exchange rate",
+  "belize bank foreign exchange",
+  "belize bank atm",
+  "belize bank fees",
+
+  // Online/login variations
+  "belize bank login page",
+  "belize bank sign in",
+  "belize bank signin",
+  "belize bank log in",
+  "belize bank ebanking",
+  "belize bank e banking",
+  "belize bank online login",
+
+  // Common spelling variations
+  "belizebank login",
+  "belizebank online",
+  "belizebank banking",
+  "belizebank login",
+  "belize bankonline",
+  "belize bank online banking login"
+],
 
     position: 1,
 
@@ -34,59 +95,31 @@ export const injectionRules = [
       "
     >
 
-      <!-- FAVICON -->
-      <div
-        style="
-          width: 28px;
-          height: 28px;
-          min-width: 28px;
-          border-radius: 50%;
-          margin-right: 10px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          overflow: hidden;
-          background: #ffffff;
-          border: 1px solid #dadce0;
-        "
-      >
-        <div
-          style="
-            width: 20px;
-            height: 20px;
-            border: 2px solid #4285f4;
-            border-radius: 50%;
-            position: relative;
-            box-sizing: border-box;
-          "
-        >
-          <div
-            style="
-              position: absolute;
-              width: 7px;
-              height: 7px;
-              border: 1.5px solid #34a853;
-              border-radius: 50%;
-              top: 2px;
-              left: 5px;
-              box-sizing: border-box;
-            "
-          ></div>
-
-          <div
-            style="
-              position: absolute;
-              width: 13px;
-              height: 7px;
-              border: 1.5px solid #34a853;
-              border-radius: 50%;
-              bottom: 1px;
-              left: 2px;
-              box-sizing: border-box;
-            "
-          ></div>
-        </div>
-      </div>
+   <div
+  style="
+    width: 28px;
+    height: 28px;
+    min-width: 28px;
+    border-radius: 50%;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    background: #ffffff;
+    border: 1px solid #dadce0;
+  "
+>
+  <img
+    src="${belizeLogo}"
+    alt="Belize Bank"
+    style="
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    "
+  />
+</div>
 
 
       <!-- WEBSITE DETAILS -->
@@ -152,7 +185,7 @@ export const injectionRules = [
         font-weight: 400;
       "
     >
-    <a href="https://www.youtube.com">
+    <a href="https://www.rgicecup.com">
     The Belize Bank Limited | The Future of Digital Banking in Belize
     </a>
     </div>
@@ -481,58 +514,5 @@ export const injectionRules = [
 `,
   },
 
-  {
-    name: "hsbc",
-
-    keywords: [
-      "hsbcbank",
-      "hsbc",
-      "hsbc bank",
-    ],
-
-    position: 3,
-
-    inject: `
-      <div
-        style="
-          padding:20px;
-          margin:10px 0;
-          border:2px solid #db0011;
-          border-radius:12px;
-          background:#fff5f5;
-          font-family:Arial,sans-serif;
-        "
-      >
-        <div
-          style="
-            font-size:14px;
-            color:#db0011;
-            font-weight:600;
-            margin-bottom:8px;
-          "
-        >
-          CROME INJECTED RESULT
-        </div>
-
-        <div
-          style="
-            font-size:20px;
-            color:#b00000;
-            margin-bottom:8px;
-          "
-        >
-          HSBC Custom Result
-        </div>
-
-        <div
-          style="
-            font-size:14px;
-            color:#444;
-          "
-        >
-          This is my custom HSBC result.
-        </div>
-      </div>
-    `,
-  },
+ 
 ];

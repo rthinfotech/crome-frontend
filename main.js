@@ -48,7 +48,7 @@ console.log("ICON PATH:", iconPath);
 
   win.webContents.on(
   "will-attach-webview",
-  (event, webPreferences, params) => {
+  (event, webPreferences) => {
     webPreferences.preload = path.join(
       __dirname,
       "electron",
@@ -63,6 +63,12 @@ console.log("ICON PATH:", iconPath);
 );
 
 win.webContents.on("did-attach-webview", (event, webContents) => {
+
+    webContents.setUserAgent(
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) " +
+    "AppleWebKit/537.36 (KHTML, like Gecko) " +
+    "Chrome/151.0.0.0 Safari/537.36"
+  );
   console.log("🔥 DID ATTACH WEBVIEW");
   console.log("WEBVIEW ID:", webContents.id);
 

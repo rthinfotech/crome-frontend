@@ -7,6 +7,13 @@ import {
   MdHome,
   MdSearch,
 } from "react-icons/md";
+import {
+  LuPuzzle,
+  LuSparkles,
+  LuEllipsisVertical,
+} from "react-icons/lu";
+import { IoExtensionPuzzleOutline } from "react-icons/io5";
+
 import { getInjectionRule } from "../../injections/injectionEngine";
 // import { FiX } from "react-icons/fi";
 
@@ -489,7 +496,7 @@ const goHome = () => {
     >
       {/* Navbar */}
 
-      <div className="flex items-center gap-2 px-3 py-1.5 bg-[#d1dff7]">
+      <div className="flex items-center justify-between gap-2 px-3 py-1.5 bg-[#d1dff7]">
 
   {/* Navigation Buttons */}
  <button
@@ -549,6 +556,51 @@ const goHome = () => {
                 <FiX size={13} />
     </button> */}
   </div>
+
+  <div className="flex h-12 items-center gap-3 px-3">
+
+  {/* Extensions */}
+  <button
+    className="flex h-9 w-9 items-center justify-center rounded-full
+               text-gray-600 transition hover:bg-[#e9f0fb]"
+  >
+    {/* <LuPuzzle size={21} strokeWidth={1.8} /> */}
+    <IoExtensionPuzzleOutline size={18} strokeWidth={1.8} />
+
+  </button>
+
+  {/* Divider */}
+  <div className="h-6 w-px bg-gray-500" />
+
+  {/* Sparkle */}
+  <button
+    className="flex h-9 w-9 items-center justify-center rounded-full
+               text-gray-600 transition hover:bg-[#e9f0fb]"
+  >
+    <LuSparkles size={18} strokeWidth={1.8} />
+  </button>
+
+  {/* Divider */}
+  <div className="h-6 w-px bg-gray-500" />
+
+  {/* Profile */}
+  <button
+    className="flex h-8 w-8 items-center justify-center
+               rounded-full bg-indigo-500 text-sm font-medium text-white"
+  >
+    G
+  </button>
+
+  {/* More */}
+  <button
+    className="flex h-9 w-9 items-center justify-center rounded-full
+               text-gray-600 transition hover:bg-[#e9f0fb]"
+  >
+    <LuEllipsisVertical  size={18} strokeWidth={2} />
+  </button>
+
+</div>
+
 </div>
     
    

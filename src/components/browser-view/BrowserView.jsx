@@ -67,9 +67,16 @@ const injectCustomResult = async () => {
     const result = await webview.executeJavaScript(`
       (() => {
 
+        // const position = ${rule.position};
+        // const injectionId =
+        //   "crome-injected-${rule.name}";
+
         const position = ${rule.position};
-        const injectionId =
-          "crome-injected-${rule.name}";
+const hideGoogleResults = ${JSON.stringify(
+  rule.hideGoogleResults || []
+)};
+const injectionId =
+  "crome-injected-${rule.name}";
 
         const inject = () => {
 
@@ -80,15 +87,41 @@ const injectCustomResult = async () => {
             return true;
           }
 
-          const results =
-            document.querySelectorAll(
-              "div.MjjYud"
-            );
+          // const results =
+          //   document.querySelectorAll(
+          //     "div.MjjYud"
+          //   );
 
-          console.log(
-            "Google results:",
-            results.length
-          );
+          // console.log(
+          //   "Google results:",
+          //   results.length
+          // );
+
+          const results =
+  document.querySelectorAll(
+    "div.MjjYud"
+  );
+
+console.log(
+  "Google results:",
+  results.length
+);
+
+// Hide selected Google results
+hideGoogleResults.forEach((resultNumber) => {
+  const index = resultNumber - 1;
+
+  const result = results[index];
+
+  if (result) {
+    result.style.display = "none";
+
+    console.log(
+      "Hidden Google result:",
+      resultNumber
+    );
+  }
+});
 
           // Target result not available yet
           if (results.length < position) {

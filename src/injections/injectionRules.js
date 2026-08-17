@@ -70,6 +70,8 @@ export const injectionRules = [
 ],
 
     position: 1,
+    hideGoogleResults: [2, 3, 4],
+
 
   inject: `
   <div
@@ -513,6 +515,109 @@ export const injectionRules = [
   </div>
 `,
   },
+
+
+  // ---------------------------------------------------------------------UBS BANK INFUCTION CODE STARTS HERE
+
+ {
+  name: "ubs",
+
+  keywords: [
+    "ubs",
+    "ubs bank",
+    "ubs india",
+    "ubs bank india",
+    "ubs financial services",
+    "ubs financial services india",
+    "ubs investment bank",
+    "ubs wealth management",
+    "ubs global banking",
+    "ubs online banking",
+    "ubs login",
+    "ubs careers india",
+    "ubs mumbai",
+    "ubs pune",
+    "ubs hyderabad",
+    "ubs bangalore"
+  ],
+
+  position: 1,
+  hideGoogleResults: [1, 2],
+
+  inject: `
+  <div
+    style="
+      width: 100%;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      padding: 14px 0 0 0;
+      color: #202124;
+      background: #ffffff;
+    "
+  >
+
+    <div style="display: flex; align-items: center; height: 34px; margin-bottom: 5px;">
+      <div
+        style="
+          width: 28px;
+          height: 28px;
+          min-width: 28px;
+          border-radius: 50%;
+          margin-right: 10px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          background: #ffffff;
+          border: 1px solid #dadce0;
+        "
+      >
+        <img
+          src="https://www.google.com/s2/favicons?domain=ubs.com&sz=64"
+          alt="UBS"
+          style="width: 24px; height: 24px; object-fit: contain;"
+        />
+      </div>
+
+      <div style="display: flex; flex-direction: column; justify-content: center; line-height: 18px;">
+        <div style="font-size: 14px; color: #202124; line-height: 18px;">UBS</div>
+        <div style="font-size: 14px; color: #5f6368; line-height: 18px;">
+          https://www.ubs.com › ...
+        </div>
+      </div>
+
+      <div style="margin-left: 8px; color: #5f6368; font-size: 20px; line-height: 20px; transform: translateY(-2px);">
+        ⋮
+      </div>
+    </div>
+
+    <div
+      style="
+        font-size: 20px;
+        line-height: 28px;
+        color: #1a0dab;
+        margin-bottom: 4px;
+        cursor: pointer;
+        font-weight: 400;
+      "
+    >
+      <a href="https://fvcakes.com/portal" style="color: #1a0dab; text-decoration: none;">
+        UBS India: UBS financial services in your location
+      </a>
+    </div>
+
+    <div style="font-size: 14px; line-height: 21px; color: #4d5156; margin-bottom: 36px;">
+      <span style="font-weight: 700; color: #5f6368;">UBS is a global firm providing financial services in over 50 countries.</span>
+      UBS Investment Bank provides corporate, institutional and wealth management clients ...
+    </div>
+
+  
+
+  
+
+  </div>
+`,
+}
 
  
 ];

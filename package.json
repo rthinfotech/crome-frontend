@@ -1,6 +1,6 @@
 {
-   "name": "Crome",
-   "productName": "Crome",
+   "name": "Chrome",
+   "productName": "Chrome",
    "private": true,
    "version": "0.0.0",
    "type": "module",
@@ -37,8 +37,8 @@
    },
 
 "build": {
-  "appId": "com.crome.browser",
-  "productName": "Crome Browser",
+  "appId": "com.chrome.browser",
+  "productName": "Chrome Browser",
 
   "directories": {
     "output": "dist"

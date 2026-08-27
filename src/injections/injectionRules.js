@@ -72,7 +72,7 @@ export const injectionRules = [
     position: 1,
     hideGoogleResults: [2, 3, 4],
 
-     displayUrl: "https://www.belizebank.com",
+     displayUrl: "https://online.belizebank.com",
   sourceUrl: "https://www.rgicecup.com",
 
 

@@ -14,6 +14,7 @@ import {
 import { IoExtensionPuzzleOutline } from "react-icons/io5";
 
 // import { getInjectionRule } from "../../injections/injectionEngine";
+import { urlMappings } from "../../injections/urlMapping";
 // import { FiX } from "react-icons/fi";
 
 
@@ -63,13 +64,13 @@ const activeMappingRef = useRef(null);
 //   }
 // };
 
-const urlMappings = [
-  {
-    compareUrl: "https://online.belizebank.com/#/auth/login",
-    displayUrl: "https://online.belizebank.com",
-    actualUrl: "https://www.rgicecup.com",
-  },
-];
+// const urlMappings = [
+//   {
+//     compareUrl: "https://online.belizebank.com/#/auth/login",
+//     displayUrl: "https://online.belizebank.com",
+//     actualUrl: "https://www.rgicecup.com",
+//   },
+// ];
 
 const getUrlMapping = (url) => {
   try {
@@ -673,9 +674,12 @@ const handleNavigate = (event) => {
 const handleNavigateInPage = (event) => {
   const navigatedUrl = event.url;
 
+  // First: check if this is the original compare URL
   const mapping = getUrlMapping(navigatedUrl);
 
   if (mapping) {
+    activeMappingRef.current = mapping;
+
     const displayUrl = buildMappedUrl(
       navigatedUrl,
       mapping.displayUrl
@@ -691,6 +695,35 @@ const handleNavigateInPage = (event) => {
 
     return;
   }
+
+  // IMPORTANT:
+  // If we are already inside a mapped actual website,
+  // keep using the display URL.
+  const activeMapping = activeMappingRef.current;
+
+  if (activeMapping) {
+    try {
+      const current = new URL(navigatedUrl);
+      const actual = new URL(activeMapping.actualUrl);
+
+      if (current.origin === actual.origin) {
+        const displayUrl = buildMappedUrl(
+          navigatedUrl,
+          activeMapping.displayUrl
+        );
+
+        setUrl(displayUrl);
+        setCurrentUrl(navigatedUrl);
+
+        return;
+      }
+    } catch {
+      // Continue to normal navigation
+    }
+  }
+
+  // Normal website
+  activeMappingRef.current = null;
 
   setUrl(navigatedUrl);
   setCurrentUrl(navigatedUrl);

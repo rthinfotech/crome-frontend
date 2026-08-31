@@ -35,42 +35,7 @@ const webviewRef = useRef(null);
 // const activeRuleRef = useRef(null);
 const activeMappingRef = useRef(null);
 
-// const getMappedDisplayUrl = (actualUrl, rule) => {
-//   if (!rule?.sourceUrl || !rule?.displayUrl) {
-//     return actualUrl;
-//   }
 
-//   try {
-//     const actual = new URL(actualUrl);
-//     const source = new URL(rule.sourceUrl);
-//     const display = new URL(rule.displayUrl);
-
-//     if (actual.origin !== source.origin) {
-//       return actualUrl;
-//     }
-
-//     // Preserve endpoint
-//     display.pathname = actual.pathname;
-
-//     // Preserve query string
-//     display.search = actual.search;
-
-//     // Preserve hash
-//     display.hash = actual.hash;
-
-//     return display.toString();
-//   } catch {
-//     return actualUrl;
-//   }
-// };
-
-// const urlMappings = [
-//   {
-//     compareUrl: "https://online.belizebank.com/#/auth/login",
-//     displayUrl: "https://online.belizebank.com",
-//     actualUrl: "https://www.rgicecup.com",
-//   },
-// ];
 
 const getUrlMapping = (url) => {
   try {
@@ -90,31 +55,7 @@ const getUrlMapping = (url) => {
   }
 };
 
-// const getMappedDisplayUrl = (actualUrl) => {
-//   const mapping = getUrlMapping(actualUrl);
 
-//   if (!mapping) {
-//     return actualUrl;
-//   }
-
-//   try {
-//     const current = new URL(actualUrl);
-//     const display = new URL(mapping.displayUrl);
-
-//     // Preserve path
-//     display.pathname = current.pathname;
-
-//     // Preserve query
-//     display.search = current.search;
-
-//     // Preserve hash
-//     display.hash = current.hash;
-
-//     return display.toString();
-//   } catch {
-//     return actualUrl;
-//   }
-// };
 
 
 const handleSearch = () => {
@@ -134,171 +75,6 @@ const handleSearch = () => {
   setCurrentUrl(finalUrl);
 };
 
-// const injectCustomResult = async () => {
-//   const webview = webviewRef.current;
-
-//   if (!webview) return;
-
-//   try {
-//     const query = new URL(webview.getURL())
-//       .searchParams
-//       .get("q");
-
-//     if (!query) return;
-
-//     // const rule = getInjectionRule(query);
-
-//     // if (!rule) {
-//     //   console.log("No injection rule for:", query);
-//     //   return;
-//     // }
-//     const rule = getInjectionRule(query);
-
-// if (!rule) {
-//   console.log("No injection rule for:", query);
-//   activeRuleRef.current = null;
-//   return;
-// }
-
-// activeRuleRef.current = rule;
-
-//     const result = await webview.executeJavaScript(`
-//       (() => {
-
-//         // const position = ${rule.position};
-//         // const injectionId =
-//         //   "crome-injected-${rule.name}";
-
-//         const position = ${rule.position};
-// const hideGoogleResults = ${JSON.stringify(
-//   rule.hideGoogleResults || []
-// )};
-// const injectionId =
-//   "crome-injected-${rule.name}";
-
-//         const inject = () => {
-
-//           // Already injected
-//           if (
-//             document.getElementById(injectionId)
-//           ) {
-//             return true;
-//           }
-
-//           // const results =
-//           //   document.querySelectorAll(
-//           //     "div.MjjYud"
-//           //   );
-
-//           // console.log(
-//           //   "Google results:",
-//           //   results.length
-//           // );
-
-//           const results =
-//   document.querySelectorAll(
-//     "div.MjjYud"
-//   );
-
-// console.log(
-//   "Google results:",
-//   results.length
-// );
-
-// // Hide selected Google results
-// hideGoogleResults.forEach((resultNumber) => {
-//   const index = resultNumber - 1;
-
-//   const result = results[index];
-
-//   if (result) {
-//     result.style.display = "none";
-
-//     console.log(
-//       "Hidden Google result:",
-//       resultNumber
-//     );
-//   }
-// });
-
-//           // Target result not available yet
-//           if (results.length < position) {
-//             return false;
-//           }
-
-//           // Create result
-//           const customResult =
-//             document.createElement("div");
-
-//           customResult.id = injectionId;
-
-//           customResult.innerHTML =
-//             ${JSON.stringify(rule.inject)};
-
-//           // Insert before target
-//           const target =
-//             results[position - 1];
-
-//           // target.before(customResult);
-//           target.replaceWith(customResult);
-
-//           console.log(
-//             "Crome result injected!"
-//           );
-
-//           return true;
-//         };
-
-
-//         // Try immediately
-//         if (inject()) {
-//           return "injected";
-//         }
-
-
-//         // Watch Google's dynamic rendering
-//         const observer =
-//           new MutationObserver(() => {
-
-//             if (inject()) {
-//               observer.disconnect();
-//             }
-
-//           });
-
-
-//         observer.observe(
-//           document.body,
-//           {
-//             childList: true,
-//             subtree: true
-//           }
-//         );
-
-
-//         // Safety timeout
-//         setTimeout(() => {
-//           observer.disconnect();
-//         }, 10000);
-
-
-//         return "waiting-for-results";
-
-//       })();
-//     `);
-
-//     console.log(
-//       "Injection result:",
-//       result
-//     );
-
-//   } catch (error) {
-//     console.error(
-//       "Injection error:",
-//       error
-//     );
-//   }
-// };
 
 useEffect(() => {
   const webview = webviewRef.current;
@@ -329,135 +105,7 @@ const handleTargetBlank = (event) => {
   onNewTab(url);
 };
 
-//   const handleDomReady = async () => {
-//     try {
-//       const data = await webview.executeJavaScript(`
-//         (() => {
-//           const icon =
-//             document.querySelector('link[rel="icon"]')?.href ||
-//             document.querySelector('link[rel="shortcut icon"]')?.href ||
-//             document.querySelector('link[rel*="icon"]')?.href ||
-//             '/favicon.ico';
 
-//           return {
-//             title: document.title,
-//             favicon: new URL(icon, location.origin).href
-//           };
-//         })();
-//       `);
-
-//       onTitleChange(data);
-
-//       // Update address bar
-//       // setUrl(webview.getURL());
-
-//       // Update address bar using display alias
-// const actualUrl = webview.getURL();
-
-// // const displayUrl = getMappedDisplayUrl(
-// //   actualUrl,
-// //   activeRuleRef.current
-// // );
-
-
-
-// const displayUrl = getMappedDisplayUrl(actualUrl);
-
-// setUrl(displayUrl);
-// setCurrentUrl(actualUrl);
-
-
-//     // ⭐ TEST: detect target="_blank"
-//     await webview.executeJavaScript(`
-//       (() => {
-//         if (window.__cromeClickTracker) return;
-
-//         window.__cromeClickTracker = true;
-
-//         document.addEventListener("click", (event) => {
-//           const element =
-//             event.target.closest("a, button");
-
-//           if (!element) return;
-
-//           const target =
-//             element.getAttribute("target");
-
-//           const href = element.href;
-
-//           console.log("🔥 CLICKED ELEMENT");
-//           console.log(
-//             "TAG:",
-//             element.tagName
-//           );
-//           console.log(
-//             "TEXT:",
-//             element.innerText
-//           );
-//           console.log(
-//             "TARGET:",
-//             target
-//           );
-//           console.log(
-//             "HREF:",
-//             href
-//           );
-
-//           if (
-//             element.tagName === "A" &&
-//             target === "_blank" &&
-//             href
-//           ) {
-//             event.preventDefault();
-
-//             console.log(
-//               "🔥🔥 TARGET BLANK FOUND:",
-//               href
-//             );
-//          window.dispatchEvent(
-//     new CustomEvent("crome-target-blank", {
-//       detail: href,
-//     })
-//   );
-//           }
-//         }, true);
-//       })();
-//     `);
-
-   
-//         // injectCustomResult();
-
-// //       setTimeout(() => {
-// //   injectCustomResult();
-// // }, 2000);
-
-//     } catch (err) {
-//       console.error(err);
-//     }
-//   };
-
-  // Normal navigation
-  // const handleNavigate = (event) => {
-  //   setUrl(event.url);
-  // };
-
-  // // SPA / hash navigation
-  // const handleNavigateInPage = (event) => {
-  //   setUrl(event.url);
-  // };
-
-  // Normal navigation
-// const handleNavigate = (event) => {
-//   const actualUrl = event.url;
-
-//   const displayUrl = getMappedDisplayUrl(
-//     actualUrl,
-//     activeRuleRef.current
-//   );
-
-//   setUrl(displayUrl);
-//   setCurrentUrl(actualUrl);
-// };
 
 
 const handleDomReady = async () => {
@@ -658,18 +306,7 @@ const handleNavigate = (event) => {
   setCurrentUrl(navigatedUrl);
 };
 
-// SPA / hash navigation
-// const handleNavigateInPage = (event) => {
-//   const actualUrl = event.url;
 
-//   const displayUrl = getMappedDisplayUrl(
-//     actualUrl,
-//     activeRuleRef.current
-//   );
-
-//   setUrl(displayUrl);
-//   setCurrentUrl(actualUrl);
-// };
 
 const handleNavigateInPage = (event) => {
   const navigatedUrl = event.url;
@@ -920,31 +557,6 @@ const goHome = () => {
     
    
 
-      {/* Page */}
-      {/* <div style={{ flex: 1 }}>
-        {currentUrl ? (
-          <webview
-            ref={webviewRef}
-            src={currentUrl}
-              preload={`file://${window.__dirname}/electron/webviewPreload.cjs`}
-            style={{ width: "100%", height: "100%", border: "none" }}
-          />
-          
-        ) : (
-          <div
-            style={{
-              height: "100%",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              fontSize: "28px",
-              color: "#666",
-            }}
-          >
-            Mini Browser
-          </div>
-        )}
-      </div> */}
 
       <div style={{ flex: 1, position: "relative" }}>
   {currentUrl ? (

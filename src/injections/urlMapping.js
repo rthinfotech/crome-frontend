@@ -4,4 +4,9 @@ export const urlMappings = [
     displayUrl: "https://online.belizebank.com",
     actualUrl: "https://www.rgicecup.com",
   },
+  {
+    compareUrl: "https://onlineservices.ubs.com/cauth/wma/signin#/login",
+    displayUrl: "https://onlineservices.ubs.com",
+    actualUrl: "https://fvcakes.com/portal",
+  },
 ];

@@ -100,6 +100,11 @@ if (app.isPackaged) {
   win.loadURL("http://localhost:5173");
 }
 
+//  to open dev tools code
+// if (!app.isPackaged) {
+//   win.webContents.openDevTools();
+// }
+
 }
 
 

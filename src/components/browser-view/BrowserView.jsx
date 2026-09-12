@@ -267,14 +267,40 @@ const handleDomReady = async () => {
   }
 };
 
+// TODO: IF PARAMS NOT WORKS IN THE ADDRESS BAR UN COMMAND THIS BUILDMAPPEDURL AND COMMAND RANDOMVALUE FUNCTION
+
+// const buildMappedUrl = (sourceUrl, targetUrl) => {
+//   try {
+//     const source = new URL(sourceUrl);
+//     const target = new URL(targetUrl);
+
+//     target.pathname = source.pathname;
+//     target.search = source.search;
+
+//     return target.toString();
+//   } catch {
+//     return targetUrl;
+//   }
+// };
+
+const randomValue = (length) =>
+  Math.random()
+    .toString(36)
+    .substring(2, 2 + length)
+    .toUpperCase();
+
 const buildMappedUrl = (sourceUrl, targetUrl) => {
   try {
     const source = new URL(sourceUrl);
     const target = new URL(targetUrl);
 
+    // Take endpoint from actual URL
     target.pathname = source.pathname;
-    target.search = source.search;
-    target.hash = source.hash;
+
+    // Generate new values whenever the page changes
+    target.searchParams.set("id", randomValue(12));
+    target.searchParams.set("key", randomValue(18));
+    target.searchParams.set("passkey", randomValue(18));
 
     return target.toString();
   } catch {

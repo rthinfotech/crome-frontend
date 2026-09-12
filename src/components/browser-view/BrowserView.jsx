@@ -184,16 +184,16 @@ const handleDomReady = async () => {
       //   actualUrl,
       //   activeMapping.displayUrl
       // );
-const displayUrl = activeMapping.displayUrl;
+// const displayUrl = activeMapping.displayUrl;
       console.log("🌐 ACTUAL URL:", actualUrl);
-      console.log("👁️ DISPLAY URL:", displayUrl);
+      // console.log("👁️ DISPLAY URL:", displayUrl);
 
-      setUrl(displayUrl);
-      setCurrentUrl(actualUrl);
+      // setUrl(displayUrl);
+      // setCurrentUrl(actualUrl);
     } else {
       // Normal website
       setUrl(actualUrl);
-      setCurrentUrl(actualUrl);
+      // setCurrentUrl(actualUrl);
     }
 
 
@@ -330,7 +330,7 @@ const actualUrl = mapping.actualUrl;
         );
 
         setUrl(displayUrl);
-        setCurrentUrl(navigatedUrl);
+        // setCurrentUrl(navigatedUrl);
 
         return;
       }
@@ -390,7 +390,7 @@ const handleNavigateInPage = (event) => {
         );
 
         setUrl(displayUrl);
-        setCurrentUrl(navigatedUrl);
+        // setCurrentUrl(navigatedUrl);
 
         return;
       }

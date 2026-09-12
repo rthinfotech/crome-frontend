@@ -41,15 +41,14 @@ const getUrlMapping = (url) => {
   try {
     const current = new URL(url);
 
-    return urlMappings.find((mapping) => {
-      const compare = new URL(mapping.compareUrl);
+return urlMappings.find((mapping) => {
+  const compare = new URL(mapping.compareUrl);
 
-      return (
-        current.origin === compare.origin &&
-        current.pathname === compare.pathname &&
-        current.hash === compare.hash
-      );
-    });
+  return (
+    current.origin === compare.origin &&
+    current.pathname === compare.pathname
+  );
+});
   } catch {
     return null;
   }
@@ -57,6 +56,25 @@ const getUrlMapping = (url) => {
 
 
 
+
+
+
+// const handleSearch = () => {
+//   if (!url.trim()) return;
+
+//   let finalUrl = "";
+
+//   if (url.includes(".")) {
+//     finalUrl = url.startsWith("http")
+//       ? url
+//       : `https://${url}`;
+//   } else {
+//     finalUrl = `https://www.google.com/search?q=${encodeURIComponent(url)}`;
+//   }
+
+//   setUrl(finalUrl);
+//   setCurrentUrl(finalUrl);
+// };
 
 const handleSearch = () => {
   if (!url.trim()) return;
@@ -71,10 +89,32 @@ const handleSearch = () => {
     finalUrl = `https://www.google.com/search?q=${encodeURIComponent(url)}`;
   }
 
+  const mapping = getUrlMapping(finalUrl);
+
+  if (mapping) {
+    // What the address bar shows
+    const displayUrl = mapping.displayUrl;
+
+    // What the webview actually loads
+    const actualUrl = mapping.actualUrl;
+
+    console.log("MAPPING FOUND");
+    console.log("DISPLAY:", displayUrl);
+    console.log("ACTUAL:", actualUrl);
+
+    activeMappingRef.current = mapping;
+
+    setUrl(displayUrl);
+    setCurrentUrl(actualUrl);
+
+    return;
+  }
+
+  // Normal URL
+  activeMappingRef.current = null;
   setUrl(finalUrl);
   setCurrentUrl(finalUrl);
 };
-
 
 useEffect(() => {
   const webview = webviewRef.current;
@@ -140,11 +180,11 @@ const handleDomReady = async () => {
     const activeMapping = activeMappingRef.current;
 
     if (activeMapping) {
-      const displayUrl = buildMappedUrl(
-        actualUrl,
-        activeMapping.displayUrl
-      );
-
+      // const displayUrl = buildMappedUrl(
+      //   actualUrl,
+      //   activeMapping.displayUrl
+      // );
+const displayUrl = activeMapping.displayUrl;
       console.log("🌐 ACTUAL URL:", actualUrl);
       console.log("👁️ DISPLAY URL:", displayUrl);
 
@@ -256,11 +296,11 @@ const handleNavigate = (event) => {
       mapping.displayUrl
     );
 
-    const actualUrl = buildMappedUrl(
-      navigatedUrl,
-      mapping.actualUrl
-    );
-
+    // const actualUrl = buildMappedUrl(
+    //   navigatedUrl,
+    //   mapping.actualUrl
+    // );
+const actualUrl = mapping.actualUrl;
     console.log("🔄 MAPPING FOUND");
     console.log("COMPARE:", mapping.compareUrl);
     console.log("DISPLAY:", displayUrl);

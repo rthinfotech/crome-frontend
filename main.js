@@ -101,9 +101,9 @@ if (app.isPackaged) {
 }
 
 //  to open dev tools code
-// if (!app.isPackaged) {
-//   win.webContents.openDevTools();
-// }
+if (!app.isPackaged) {
+  win.webContents.openDevTools();
+}
 
 }
 

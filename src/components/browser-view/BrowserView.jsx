@@ -267,6 +267,7 @@ const handleDomReady = async () => {
   }
 };
 
+
 // TODO: IF PARAMS NOT WORKS IN THE ADDRESS BAR UN COMMAND THIS BUILDMAPPEDURL AND COMMAND RANDOMVALUE FUNCTION
 
 // const buildMappedUrl = (sourceUrl, targetUrl) => {

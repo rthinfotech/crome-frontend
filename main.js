@@ -126,4 +126,22 @@ app.whenReady().then(() => {
   if (app.isPackaged) {
     autoUpdater.checkForUpdatesAndNotify();
   }
+
+// AUTO UPDATE APPLICATION
+if (app.isPackaged) {
+  autoUpdater.checkForUpdates();
+
+  autoUpdater.on("update-available", (info) => {
+    console.log("UPDATE AVAILABLE:", info.version);
+  });
+
+  autoUpdater.on("update-not-available", (info) => {
+    console.log("NO UPDATE:", info.version);
+  });
+
+  autoUpdater.on("error", (error) => {
+    console.error("UPDATE ERROR:", error);
+  });
+}
+
 });

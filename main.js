@@ -5,8 +5,8 @@ import {
 } from "./electron/context-menu/contextMenu.js";
 import path from "path";
 import { fileURLToPath } from "url";
-import { autoUpdater } from "electron-updater";
-
+import pkg from "electron-updater";
+const { autoUpdater } = pkg;
 
 
 const __filename = fileURLToPath(import.meta.url);

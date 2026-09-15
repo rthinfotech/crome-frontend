@@ -29,3 +29,4 @@ export default function ChromeTabBar({ tabs, activeTab, setActiveTab, addTab, cl
     </div>
   );
 }
+

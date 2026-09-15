@@ -2,7 +2,7 @@
    "name": "Chrome",
    "productName": "Chrome",
    "private": true,
-   "version": "1.0.3",
+   "version": "1.0.4",
    "type": "module",
    "main": "main.js",
    "scripts": {
@@ -53,9 +53,7 @@
       "publish": {
          "provider": "github",
          "owner": "rthinfotech",
-         "repo": "crome-frontend",
-         "private": true
-
+         "repo": "crome-frontend"
       }
    }
 }

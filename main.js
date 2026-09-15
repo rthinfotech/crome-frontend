@@ -5,6 +5,8 @@ import {
 } from "./electron/context-menu/contextMenu.js";
 import path from "path";
 import { fileURLToPath } from "url";
+import { autoUpdater } from "electron-updater";
+
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -120,4 +122,8 @@ app.whenReady().then(() => {
   );
 
   createWindow();
+    // AUTO UPDATE APPLICATION
+  if (app.isPackaged) {
+    autoUpdater.checkForUpdatesAndNotify();
+  }
 });

@@ -1,40 +1,40 @@
-name: Build Electron Release
+# name: Build Electron Release
+
+# # on:
+# #   push:
+# #     tags:
+# #       - "v*"
 
 # on:
 #   push:
-#     tags:
-#       - "v*"
+#     branches:
+#       - main
 
-on:
-  push:
-    branches:
-      - main
+# permissions:
+#   contents: write
 
-permissions:
-  contents: write
+# jobs:
+#   release:
+#     runs-on: windows-latest
 
-jobs:
-  release:
-    runs-on: windows-latest
+#     steps:
+#       - name: Checkout code
+#         uses: actions/checkout@v4
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+#       - name: Setup Node
+#         uses: actions/setup-node@v4
+#         with:
+#           node-version: 22
+#           cache: npm
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
+#       - name: Install dependencies
+#         run: npm install
+#         # run: npm ci
 
-      - name: Install dependencies
-        run: npm install
-        # run: npm ci
+#       - name: Build React application
+#         run: npm run build
 
-      - name: Build React application
-        run: npm run build
-
-      - name: Build and publish Electron
-        run: npx electron-builder --publish always
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - name: Build and publish Electron
+#         run: npx electron-builder --publish always
+#         env:
+#           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

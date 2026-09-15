@@ -49,11 +49,6 @@
       "win": {
          "target": "nsis",
          "icon": "assets/crome-logo.ico"
-      },
-      "publish": {
-         "provider": "github",
-         "owner": "rthinfotech",
-         "repo": "crome-frontend"
       }
    }
 }

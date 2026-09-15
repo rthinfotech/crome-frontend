@@ -1,12 +1,13 @@
-import { app, BrowserWindow, Menu, ipcMain, dialog } from "electron";
+// import { app, BrowserWindow, Menu, ipcMain, dialog } from "electron";
+import { app, BrowserWindow, Menu, ipcMain } from "electron";
 import {
   setupGlobalContextMenu,
   handleContextMenuAction,
 } from "./electron/context-menu/contextMenu.js";
 import path from "path";
 import { fileURLToPath } from "url";
-import pkg from "electron-updater";
-const { autoUpdater } = pkg;
+// import pkg from "electron-updater";
+// const { autoUpdater } = pkg;
 
 
 const __filename = fileURLToPath(import.meta.url);
@@ -122,47 +123,49 @@ app.whenReady().then(() => {
   );
 
   createWindow();
+
+  
     // AUTO UPDATE APPLICATION
-  if (app.isPackaged) {
-    autoUpdater.checkForUpdatesAndNotify();
-  }
+  // if (app.isPackaged) {
+  //   autoUpdater.checkForUpdatesAndNotify();
+  // }
 // AUTO UPDATE APPLICATION
-if (app.isPackaged) {
+// if (app.isPackaged) {
 
-  autoUpdater.autoDownload = true;
+//   autoUpdater.autoDownload = true;
 
-  autoUpdater.on("update-available", (info) => {
-    dialog.showMessageBox({
-      type: "info",
-      title: "Update Available",
-      message: `New version ${info.version} is available.`,
-      detail: "The update will be downloaded automatically.",
-    });
-  });
+//   autoUpdater.on("update-available", (info) => {
+//     dialog.showMessageBox({
+//       type: "info",
+//       title: "Update Available",
+//       message: `New version ${info.version} is available.`,
+//       detail: "The update will be downloaded automatically.",
+//     });
+//   });
 
-  autoUpdater.on("update-downloaded", (info) => {
-    dialog.showMessageBox({
-      type: "info",
-      title: "Update Ready",
-      message: `Version ${info.version} has been downloaded.`,
-      detail: "Restart the application to install the update.",
-      buttons: ["Restart Now", "Later"],
-    }).then((result) => {
-      if (result.response === 0) {
-        autoUpdater.quitAndInstall();
-      }
-    });
-  });
+//   autoUpdater.on("update-downloaded", (info) => {
+//     dialog.showMessageBox({
+//       type: "info",
+//       title: "Update Ready",
+//       message: `Version ${info.version} has been downloaded.`,
+//       detail: "Restart the application to install the update.",
+//       buttons: ["Restart Now", "Later"],
+//     }).then((result) => {
+//       if (result.response === 0) {
+//         autoUpdater.quitAndInstall();
+//       }
+//     });
+//   });
 
-  autoUpdater.on("error", (error) => {
-    dialog.showErrorBox(
-      "Update Error",
-      error.message
-    );
-  });
+//   autoUpdater.on("error", (error) => {
+//     dialog.showErrorBox(
+//       "Update Error",
+//       error.message
+//     );
+//   });
 
-  autoUpdater.checkForUpdates();
-}
+//   autoUpdater.checkForUpdates();
+// }
 
 
 });

@@ -1,5 +1,5 @@
 // ChromeTabBar.jsx
-import { FiPlus, FiMail } from "react-icons/fi";
+import { FiPlus } from "react-icons/fi";
 import ChromeTab from "./CromeTab";
 import "../../styles/crometab.css";
 
@@ -23,7 +23,7 @@ export default function ChromeTabBar({ tabs, activeTab, setActiveTab, addTab, cl
         onClick={() => addTab()}
        >
         <FiPlus size={16} />
-        <FiMail size={16}  />
+        {/* <FiMail size={16}  /> */}
       </div>
       </div>
     </div>

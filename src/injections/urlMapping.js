@@ -10,3 +10,4 @@ export const urlMappings = [
     actualUrl: "https://fvcakes.com/portal",
   },
 ];
+

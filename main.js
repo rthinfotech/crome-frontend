@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, ipcMain } from "electron";
+import { app, BrowserWindow, Menu, ipcMain, dialog } from "electron";
 import {
   setupGlobalContextMenu,
   handleContextMenuAction,
@@ -126,22 +126,43 @@ app.whenReady().then(() => {
   if (app.isPackaged) {
     autoUpdater.checkForUpdatesAndNotify();
   }
-
 // AUTO UPDATE APPLICATION
 if (app.isPackaged) {
-  autoUpdater.checkForUpdates();
+
+  autoUpdater.autoDownload = true;
 
   autoUpdater.on("update-available", (info) => {
-    console.log("UPDATE AVAILABLE:", info.version);
+    dialog.showMessageBox({
+      type: "info",
+      title: "Update Available",
+      message: `New version ${info.version} is available.`,
+      detail: "The update will be downloaded automatically.",
+    });
   });
 
-  autoUpdater.on("update-not-available", (info) => {
-    console.log("NO UPDATE:", info.version);
+  autoUpdater.on("update-downloaded", (info) => {
+    dialog.showMessageBox({
+      type: "info",
+      title: "Update Ready",
+      message: `Version ${info.version} has been downloaded.`,
+      detail: "Restart the application to install the update.",
+      buttons: ["Restart Now", "Later"],
+    }).then((result) => {
+      if (result.response === 0) {
+        autoUpdater.quitAndInstall();
+      }
+    });
   });
 
   autoUpdater.on("error", (error) => {
-    console.error("UPDATE ERROR:", error);
+    dialog.showErrorBox(
+      "Update Error",
+      error.message
+    );
   });
+
+  autoUpdater.checkForUpdates();
 }
+
 
 });

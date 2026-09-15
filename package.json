@@ -2,7 +2,7 @@
    "name": "Chrome",
    "productName": "Chrome",
    "private": true,
-   "version": "1.0.3",
+   "version": "0.0.0",
    "type": "module",
    "main": "main.js",
    "scripts": {
